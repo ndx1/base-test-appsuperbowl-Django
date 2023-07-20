@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Activation de compte{% endblock title %}
+
+{% block content %}
+<div>
+    <h1>Activation de compte</h1>
+        <p>Bienvenue sur notre plateforme!</p>
+        <p>Pour activer votre compte, veuillez cliquer sur le lien ci-dessous :</p>
+        <a href="{{ activation_link }}">Activer mon compte</a>
+        <p>Si vous ne pouvez pas cliquer sur le lien, copiez et collez l'URL suivante dans votre navigateur :</p>
+        <p>{{ activation_link }}</p>
+        <p>Merci et profitez bien de notre service!</p>
+</div>
+{% endblock content %}

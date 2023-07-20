@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<title>{% block title %}Superbowl{% endblock %}</title>
+	<link rel="shortcut icon" href="\static\images\logo.ico" type="image/x-icon">
+
+	<style type="text/css">
+		.navbar {
+			background-color: rgb(0, 51, 116);
+			/*couleur NFL 0,51,116*/
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 9999;
+		}
+
+		.nav-link {
+			color: rgb(0, 0, 0)!important;
+		}
+		
+		.image-container {
+			text-align: center;
+			max-width: 100%;
+			max-height: 100%;
+			height: -50px;
+		}
+
+		#my-navbar .nav-link {
+            color: #ffffff !important;
+            font-size: 19px;
+        }
+
+		html * {
+			font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif';
+		}
+
+		body,
+		html {
+			height: 100%;
+			background: #2a2a2a00;
+			background-image: url("//static/images/fondmax.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+			display: flex;
+            flex-direction: column;
+		}
+
+		footer {
+			bottom: 0;
+			width: 100%;
+			color: rgb(0, 0, 0);
+            text-align: center;
+            background-color: #f8f9fa;
+			position: fixed;
+			display:inline-block;
+			vertical-align:top;
+			font-size: 15px;
+        }
+
+		.site-content {
+			flex: 1;
+		}
+
+		.container {
+			height: 100%;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<nav id="my-navbar" class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="{% url 'home' %}">
+				<img src="/static/images/pnglogo.png" width="35" height="35" alt="Logo du site"></a>
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample10"
+				aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link nav-transition" href="{% url 'home' %}">Accueil <span class="sr-only">(current)</span></a>
+					</li>
+					{% if user.is_authenticated %}
+						{% if user.is_superuser or user.is_staff %}
+							<li class="nav-item">
+								<a class="nav-link nav-transition" href="{% url 'mysite:match' %}">Match</a>
+							</li>
+						{% else %}
+							<li class="nav-item active">
+								<a class="nav-link nav-transition" href="{% url 'bets' %}">
+									<i class="bi bi-file-earmark-play"></i> Pari
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link nav-transition" href="{% url 'profile' %}">
+									<i class="bi bi-person"></i> Profil
+								</a>
+							</li>
+						{% endif %}
+						<li class="nav-item active">
+							<a class="nav-link nav-transition" href="{% url 'logout' %}">
+								<i class="bi bi-box-arrow-right"></i> Déconnexion
+							</a>
+						</li>
+					{% else %}
+						<li class="nav-item active">
+							<a class="nav-link nav-transition" href="{% url 'login' %}">
+								<i class="bi bi-box-arrow-in-right"></i> Connexion
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link nav-transition" href="{% url 'register' %}">
+								<i class="bi bi-person-plus"></i> S'inscrire
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+	</div>
+	
+	<div class="image-container">
+		<img src="\static\images\SuperBowl.png" class="img-fluid" alt="Responsive image">
+		<div id="content" name="content" , class="main">
+			<div class="row justify-content-center">
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		{% if messages %}
+		{% for message in messages %}
+		<!-- Display alert messages -->
+		<div class='alert alert-{{ message.tags }}'>
+			{{ message }}
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	<!-- Footer 
+	<footer>
+		<ul class="nav justify-content-center border-bottom">
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">NFL</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">Nous contacter</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">À propos</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">FAQs</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">CGU</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">Politique de confidentialité</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">Mentions Légales</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">Twitter</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">LinkedIn</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-footer px-1 text-body-secondary">Facebook</a>
+			</li>
+		</ul>
+		<p class="text-center text-body-secondary">&copy; 2023 SuperBowl, Inc</p>
+	</footer> -->
+	{% block content %}
+	{% endblock %}
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+</body>
+</html>
