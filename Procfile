@@ -1,1 +1,1 @@
-web: gunicorn project_superbowl.wsgi
+web: gunicorn superbowl.wsgi
